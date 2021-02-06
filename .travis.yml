@@ -17,8 +17,6 @@ before_script:
 
 script:
   - docker exec -it emscripten make deps all
-  - node test-browser/runner --matrix test-browser/all.json
-  - npm test
 
 before_deploy:
   - rvm $(travis_internal_ruby) do ruby -S gem install octokit git
