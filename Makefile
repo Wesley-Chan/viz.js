@@ -104,10 +104,12 @@ build-full/expat-$(EXPAT_VERSION): sources/expat-$(EXPAT_VERSION).tar.bz2
 build-full/graphviz-$(GRAPHVIZ_VERSION): sources/graphviz-$(GRAPHVIZ_VERSION).tar.gz
 	mkdir -p $@
 	tar -zxf sources/graphviz-$(GRAPHVIZ_VERSION).tar.gz --strip-components 1 -C $@
+	patch -d build-full -p0 < patch/graphviz-2.46.0/0001-remove-chkSgraph.patch
 
 build-lite/graphviz-$(GRAPHVIZ_VERSION): sources/graphviz-$(GRAPHVIZ_VERSION).tar.gz
 	mkdir -p $@
 	tar -zxf sources/graphviz-$(GRAPHVIZ_VERSION).tar.gz --strip-components 1 -C $@
+	patch -d build-lite -p0 < patch/graphviz-2.46.0/0001-remove-chkSgraph.patch
 
 
 sources:

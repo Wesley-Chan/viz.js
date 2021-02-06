@@ -1,0 +1,33 @@
+--- graphviz-2.46.0/lib/ortho/maze.c
++++ graphviz-2.46.0/lib/ortho/maze.c
+@@ -298,22 +298,6 @@
+     return n->np;
+ }
+ 
+-static void
+-chkSgraph (sgraph* g)
+-{
+-  int i;
+-  snode* np;
+-
+-  for (i = 0; i < g->nnodes; i++) {
+-    np = g->nodes+i;
+-    if (!np->cells[0]) fprintf (stderr, "failed at node %d[0]\n", i); 
+-    assert (np->cells[0]);
+-    if (!np->cells[1]) fprintf (stderr, "failed at node %d[1]\n", i); 
+-    assert (np->cells[1]);
+-  }
+-    
+-}
+-
+ /* mkMazeGraph:
+  */
+ static sgraph*
+@@ -436,7 +420,6 @@
+     dtclose (hdict);
+     free (ditems);
+ 
+-chkSgraph (g);
+     /* save core graph state */
+     gsave(g);
+     return g;
