@@ -1,30 +1,27 @@
+dist: xenial
+os: linux
 language: node_js
-
 node_js:
-  - node
-
+- node
 services:
-  - docker
-
+- docker
 addons:
   sauce_connect: true
-
 before_install:
-  - docker run -dit --name emscripten -v $(pwd):/src trzeci/emscripten:sdk-tag-1.37.36-64bit bash
-
+- docker run -dit --name emscripten -v $(pwd):/src trzeci/emscripten:sdk-tag-1.37.36-64bit
+  bash
 before_script:
-  - python -m SimpleHTTPServer &
-
+- python -m SimpleHTTPServer &
 script:
-  - docker exec -it emscripten make deps all
-
-before_deploy:
-  - rvm $(travis_internal_ruby) do ruby -S gem install octokit git
-  - printf "//registry.npmjs.org/:_authToken=%s\n" "$NPM_TOKEN" >> ~/.npmrc
-
+- docker exec -it emscripten make deps all
 deploy:
-  provider: script
-  script: rvm $(travis_internal_ruby) do ruby -rubygems deploy.rb
+  provider: releases
+  token: $GITHUB_TOKEN
+  file:
+  - viz.js
+  - viz.es.js
+  - full.render.js
+  - lite.render.js
   skip_cleanup: true
   on:
     tags: true
